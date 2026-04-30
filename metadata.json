@@ -1,0 +1,6 @@
+{
+  "name": "Remix: 分枝定界法可视化工具",
+  "description": "一个用于运筹学教学的交互式分支定界算法演示工具，支持自定义整数规划问题、逐步求解和树状搜索可视化。",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
