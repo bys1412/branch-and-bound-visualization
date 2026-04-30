@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Play, SkipForward, RotateCcw, Plus, Trash2, ChevronDown, ChevronUp, Info } from 'lucide-react';
 import { Problem, Variable, Constraint, SolverState, SolverNode, VariableType, PruneReason } from './types';
 import { solveLP } from './solverUtils';
+import { PasswordGate } from './components/PasswordGate';
 
 // --- Constants & Defaults ---
 const DEFAULT_PROBLEM: Problem = {
@@ -364,6 +365,7 @@ export default function App() {
   };
 
   return (
+    <PasswordGate>
     <div className="min-h-screen bg-[#f8fafc] pb-20">
       {/* Header */}
       <header className="bg-white border-b border-slate-200 px-8 py-6 sticky top-0 z-50 shadow-sm">
@@ -622,5 +624,6 @@ export default function App() {
         </div>
       </main>
     </div>
+    </PasswordGate>
   );
 }

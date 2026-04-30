@@ -1,24 +1,31 @@
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
+  // 合并系统环境变量（GitHub Actions 注入的）和 .env 文件中的变量
+  const viteAppPassword = process.env.VITE_APP_PASSWORD || env.VITE_APP_PASSWORD;
+  const geminiApiKey = process.env.GEMINI_API_KEY || env.GEMINI_API_KEY;
   return {
-    plugins: [react(), tailwindcss()],
+    base: '/branch-and-bound-visualization/',
+    plugins: [react()],
     define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+      'process.env.GEMINI_API_KEY': JSON.stringify(geminiApiKey),
+      'process.env.VITE_APP_PASSWORD': JSON.stringify(viteAppPassword)
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve(__dirname, 'src'),
       },
     },
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true,
+    },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
-      hmr: process.env.DISABLE_HMR !== 'true',
+      port: 3000,
+      open: true,
     },
   };
 });
